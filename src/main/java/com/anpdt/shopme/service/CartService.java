@@ -11,4 +11,6 @@ public interface CartService {
 	public boolean addToCart(int productId, int quantity, Customer customer);
 	
 	public void removeItem(int productId, Customer customer);
+	
+	public void checkout(Customer customer);
 }

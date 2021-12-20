@@ -23,12 +23,6 @@ public class Cart {
 	@Column(name="quantity")
 	private int quantity;
 	
-//	@Column(name="id_customer")
-//	private int idCustomer;
-//	
-//	@Column(name="id_product")
-//	private int idProduct;
-	
 	@ManyToOne
 	@JoinColumn(name="id_customer")
 	private Customer customer;

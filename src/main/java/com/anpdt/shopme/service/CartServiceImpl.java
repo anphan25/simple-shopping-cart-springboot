@@ -65,4 +65,17 @@ public class CartServiceImpl implements CartService {
 		
 	}
 
+	@Override
+	public void checkout(Customer customer) {
+		
+		List<Cart> cartItems = cartRepo.findByCustomer(customer);
+		System.out.println(cartItems);
+		
+		for(Cart cart : cartItems) {
+			System.out.println(cart);
+			cartRepo.delete(cart);
+		}
+		
+	}
+
 }

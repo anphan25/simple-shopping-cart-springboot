@@ -61,7 +61,7 @@ public class GeneralController {
 
 		HttpSession session = request.getSession();
 
-		session.setAttribute("currentUser", customer2);
+		session.setAttribute("currentUser", customer);
 		model.addAttribute("products", products);
 
 		return "product-list";
@@ -96,6 +96,19 @@ public class GeneralController {
 		cart.removeItem(productId, customer);
 
 		return "redirect:/showCart";
+	}
+	
+	@GetMapping("/checkout")
+	public String checkout(HttpServletRequest request, Model model) {
+		
+		HttpSession session = request.getSession();
+		
+		Customer customer = (Customer) session.getAttribute("currentUser");
+		
+		cart.checkout(customer);
+		
+		
+		return "redirect:/showProduct";
 	}
 
 }
