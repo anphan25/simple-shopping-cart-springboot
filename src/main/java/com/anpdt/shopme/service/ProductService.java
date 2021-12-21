@@ -2,7 +2,8 @@ package com.anpdt.shopme.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.anpdt.shopme.entity.Product;
 
@@ -12,4 +13,6 @@ public interface ProductService {
 	public List<Product> getProducts();
 	
 	public void addToCart(int productId);
+	
+	public Page<Product >findAll(int pageNumber);
 }

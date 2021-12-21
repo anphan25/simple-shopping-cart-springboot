@@ -7,9 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -50,10 +52,14 @@ public class GeneralController {
 		return "cart";
 	}
 
-	@GetMapping("/showProduct")
-	public String showProduct(Model model, HttpServletRequest request) {
+	@GetMapping("/showProduct/{pageNumber}")
+	public String showProduct(Model model, HttpServletRequest request, @PathVariable("pageNumber") int currentPage ) {
 
-		List<Product> products = product.getProducts();
+		Page<Product> page = product.findAll(currentPage);
+		
+		List<Product> products = page.getContent();
+		
+		int totalPages = page.getTotalPages();
 
 		Customer customer = new Customer(10, "Messi", "mess@gmail.com");
 
@@ -62,7 +68,10 @@ public class GeneralController {
 		HttpSession session = request.getSession();
 
 		session.setAttribute("currentUser", customer);
+		session.setAttribute("currenPage", currentPage);
 		model.addAttribute("products", products);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("currentPage", currentPage);
 
 		return "product-list";
 	}
@@ -73,17 +82,21 @@ public class GeneralController {
 
 		HttpSession session = request.getSession();
 
+		int currentPage = (int) session.getAttribute("currenPage");
+		
 		Customer customer = (Customer) session.getAttribute("currentUser");
 
 		boolean result = cart.addToCart(productId, quantity, customer);
 
 		System.out.println(result);
-
+		
 		if (result == false) {
 			model.addAttribute("buyError", "error");
 		}
+		
+		model.addAttribute("buyError", "no");
 
-		return "redirect:/showProduct";
+		return "redirect:/showProduct/"+ currentPage;
 	}
 
 	@GetMapping("/removeItem")
@@ -108,7 +121,7 @@ public class GeneralController {
 		cart.checkout(customer);
 		
 		
-		return "redirect:/showProduct";
+		return "redirect:/showProduct/1";
 	}
 
 }

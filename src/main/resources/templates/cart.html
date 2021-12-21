@@ -62,6 +62,8 @@
 		<div th:if="${#lists.isEmpty(cart_items)}">
 			<h3>No item in your cart</h3>
 		</div>
+		
+		<a th:href="@{'showProduct/' + ${session.currenPage}}">Continue to shopping</a>
 	</div>
 	
 	<scipt src="@{/js/shopping-cart.js}"></scipt>

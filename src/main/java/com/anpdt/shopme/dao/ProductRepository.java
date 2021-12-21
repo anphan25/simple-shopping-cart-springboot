@@ -10,5 +10,4 @@ import com.anpdt.shopme.entity.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
-	
 }
