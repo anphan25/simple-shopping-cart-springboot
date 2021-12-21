@@ -18,7 +18,8 @@
 		
 		<hr>
 		<a th:href="@{/showCart}">View Cart</a>
-		<span th:with="error=${buyError}"></span>
+		<hr>
+		<a th:href="@{/loadProductManagement}">Product Management</a>
 		<hr>
 		<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
@@ -33,7 +34,7 @@
 			<tbody>
 
 				<tr th:each="temp : ${products}">
-					<form th:action="@{/addToCard}" method="POST">
+					<form th:action="@{/addToCard}">
 						<td th:text="${temp.id}"></td>
 						<td th:text="${temp.name}"></td>
 						<td th:text="${temp.price}"></td>
@@ -50,9 +51,11 @@
 			</tbody>
 		</table>
 		
-		<div th:if="${buyError == 'error'}">
-			<p class="text-center">This item is not available</p>
+		<div th:if="${buy_error != null}">
+			<p th:text="${buy_error}"></p>
 		</div>
+		
+
 		
 		<span th:each="i : ${#numbers.sequence(1, totalPages)}"> <a
 			th:if="${currentPage != i}" th:href="@{'/showProduct/'+ ${i}}">[[${i}]]</a>

@@ -15,4 +15,10 @@ public interface ProductService {
 	public void addToCart(int productId);
 	
 	public Page<Product >findAll(int pageNumber);
+	
+	public void save(Product product);
+	
+	public Product getProduct(int id);
+	
+	public void delete(Product product);
 }

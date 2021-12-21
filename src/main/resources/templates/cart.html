@@ -18,7 +18,7 @@
 				<div class="row border rounded" th:with="product = ${item.product}">
 					<div class="col">
 						<div>[[${status.count}]]</div>
-						<div><a class="fas fa-trash icon-dark" th:href="@{removeItem(productId=${product.id})}">Remove item</a></div>
+						<div><a class="fas fa-trash icon-dark" onclick="if(!(confirm('Are you sure you want to remove this item?'))) return false" th:href="@{removeItem(productId=${product.id})}">Remove item</a></div>
 					</div>
 					
 					<div class="col">

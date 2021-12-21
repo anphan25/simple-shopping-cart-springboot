@@ -1,6 +1,7 @@
 package com.anpdt.shopme.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,7 +21,7 @@ public class Productumpl implements ProductService {
 	
 	@Override
 	public List<Product> getProducts() {
-		return productRepo.findAll();
+		return productRepo.findAllByOrderByName();
 	}
 
 	@Override
@@ -37,6 +38,35 @@ public class Productumpl implements ProductService {
 		Pageable page = PageRequest.of(pageNumber - 1, 5, sort);
 				
 		return productRepo.findAll(page);
+	}
+
+	@Override
+	public void save(Product product) {
+		
+		productRepo.save(product);
+		
+	}
+
+	@Override
+	public Product getProduct(int id) {
+		
+		Optional<Product> result = productRepo.findById(id);
+		
+		Product product = null;
+		
+		if(!result.isPresent()) {
+			throw new RuntimeException("Not found this product");
+		}else {
+			product = result.get();
+		}
+		
+		return product;
+	}
+
+	@Override
+	public void delete(Product product) {
+		
+		productRepo.delete(product);
 	}
 
 }
